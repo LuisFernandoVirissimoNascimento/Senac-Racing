@@ -22,15 +22,21 @@ public class Player : MonoBehaviour
 
     public Transform circleTransform;
 
-
-    public float maxSeconds;
-    public float timer;
-    bool stop;
-    public bool isDodging;
+    public Animator animator;
+    public string[] animations;
+    
+    /// Code made for testing purposes of collision at arbitrary times. To Simulate skill issues.
+    //public float maxSeconds;
+    //public float timer;
+    //bool stop;
+    //public bool isDodging;
     private void Start()
     {
         acceleration = character.acceleration;
         maxSpeed = character.maxSpeed;
+
+        int whichAnimation = Random.Range(0, animations.Length);
+        animator.Play(animations[whichAnimation]);
     }
 
     private void Update()
@@ -46,7 +52,7 @@ public class Player : MonoBehaviour
         }
 
         speed = speedCalc;
-        RandomInterruption();
+        // RandomInterruption(); // THis test func needs to go here in order to work.
         // Speed needs to be calculated before.
         splineFollower.followSpeed = speed + speedBoost;
         distance += speed * Time.deltaTime;
@@ -84,27 +90,28 @@ public class Player : MonoBehaviour
         }
     }
 
-    void RandomInterruption()
-    {
-        if(timer > maxSeconds)
-        {
-            timer = 0;
-            maxSeconds = Random.Range(15, 30);
-            stop = true;
-        }
-        else
-        {
-            timer += Time.deltaTime;
-        }
+        // Function that makes it so the player randomly stumbles. Made for the purpose of testing.
+    //void RandomInterruption()
+    //{
+    //    if(timer > maxSeconds)
+    //    {
+    //        timer = 0;
+    //        maxSeconds = Random.Range(15, 30);
+    //        stop = true;
+    //    }
+    //    else
+    //    {
+    //        timer += Time.deltaTime;
+    //    }
 
-        if (stop && timer < 2.0 - (2.0 * ( character.resistance + 1.0) / 100.0))
-        {
-            speed = maxSpeed / 2;
-            speedCalc = maxSpeed / 2;
-        }
-        else
-        {
-            stop = false;
-        }
-    }
+    //    if (stop && timer < 2.0 - (2.0 * ( character.resistance + 1.0) / 100.0))
+    //    {
+    //        speed = maxSpeed / 2;
+    //        speedCalc = maxSpeed / 2;
+    //    }
+    //    else
+    //    {
+    //        stop = false;
+    //    }
+    //}
 }

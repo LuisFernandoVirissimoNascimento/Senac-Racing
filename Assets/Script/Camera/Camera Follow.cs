@@ -13,14 +13,14 @@ public class CameraFollow : MonoBehaviour
     {
         if (!target) return;
 
-        // Target position with offset
-        Vector3 desiredPosition = target.position + target.TransformDirection(offset);
+        // Calculate the desired position based on the target's rotation and offset
+        Vector3 desiredPosition = target.position + target.rotation * offset;
 
         // Smoothly move the camera towards the desired position
         transform.position = Vector3.Lerp(transform.position, desiredPosition, positionDamping * Time.deltaTime);
 
-        // Smoothly rotate the camera to look at the car's forward direction
-        Quaternion desiredRotation = Quaternion.LookRotation(target.position - transform.position);
+        // Correct the rotation to look at the target while maintaining the correct orientation
+        Quaternion desiredRotation = target.rotation * Quaternion.Euler(0, 180, 0); // Flip Y-axis to face forward
         transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationDamping * Time.deltaTime);
     }
 }

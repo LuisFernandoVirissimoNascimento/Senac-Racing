@@ -17,14 +17,17 @@ public class AIRacers : MonoBehaviour
     public float speedCalc;
     public float acceleration;
     public int place;
-    public SplineFollower splineFollower; public float maxSeconds;
-    public float timer;
-    bool stop;
-    public bool isDodging;
+    public SplineFollower splineFollower;
+
+    public Animator animator;
+    public string[] animations;
     private void Start()
     {
         acceleration = character.acceleration;
         maxSpeed = character.maxSpeed;
+
+        int whichAnimation = Random.Range(0, animations.Length);
+        animator.Play(animations[whichAnimation]);
     }
 
     private void Update()
@@ -40,40 +43,10 @@ public class AIRacers : MonoBehaviour
         }
 
         speed = speedCalc;
-        if (!isDodging)
-        {
-            RandomInterruption();
-        }
         // Speed needs to be calculated before.
         splineFollower.followSpeed = speed + speedBoost;
         distance += speed * Time.deltaTime;
 
     }
 
-    void RandomInterruption()
-    {
-        if (timer > maxSeconds)
-        {
-            timer = 0;
-            maxSeconds = Random.Range(15, 30);
-            stop = true;
-        }
-        else
-        {
-            timer += Time.deltaTime;
-        }
-
-        if (stop && timer < 2.0 - (2.0 * (character.resistance + 1.0) / 100.0))
-        {
-            if(speed != 0)
-            {
-                speed = maxSpeed / 2;
-                speedCalc = maxSpeed / 2;
-            }
-        }
-        else
-        {
-            stop = false;
-        }
-    }
 }

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 1
   nome: 
-  description: 
-  maxSpeed: 29.5
-  acceleration: 6
+  description: 6
+  maxSpeed: 71.5
+  acceleration: 20
   resistance: 0
   manouverability: 12
