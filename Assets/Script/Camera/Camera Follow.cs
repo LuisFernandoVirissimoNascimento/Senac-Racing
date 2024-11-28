@@ -20,7 +20,15 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPosition, positionDamping * Time.deltaTime);
 
         // Correct the rotation to look at the target while maintaining the correct orientation
-        Quaternion desiredRotation = target.rotation * Quaternion.Euler(0, 180, 0); // Flip Y-axis to face forward
-        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationDamping * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            Quaternion desiredRotation = target.rotation * Quaternion.Euler(0, 0, 0); // Flip Y-axis to face forward
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationDamping * Time.deltaTime);
+        }
+        else
+        {
+            Quaternion desiredRotation = target.rotation * Quaternion.Euler(0, 180, 0); // Flip Y-axis to face forward
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationDamping * Time.deltaTime);
+        }
     }
 }

@@ -16,6 +16,6 @@ MonoBehaviour:
   nome: 
   description: 6
   maxSpeed: 73.5
-  acceleration: 20
+  acceleration: 6
   resistance: 25
-  manouverability: 5
+  manouverability: 7
